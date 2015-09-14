@@ -1,0 +1,36 @@
+In this article below, we will go through the steps to be followed to 
+get a Hadoop 2.x cluster running on a private data centre.
+
+We will be using Ambari's latest release to setup the cluster with below 6 machines -
+
+1. Quad core machines with 8GB + RAM.
+2. CentOS/RHEL 6 as OS
+
+The 6 machines are as below -
+hadoop-ambari
+hadoop-nn
+hadoop-dn1
+hadoop-dn2
+hadoop-dn3
+hadoop-dn4
+
+Prepare the hosts file on the Ambari server for above servers.
+Also create a separate hosts.txt on the Ambari server machine -
+
+root@hadoop-ambari$ cat hosts.txt
+hadoop-nn
+hadoop-dn1
+hadoop-dn2
+hadoop-dn3
+hadoop-dn4
+
+[Run the prepare-cluster.sh on the Ambari server, This will create a passphrase-less entry on each machine on cluster]
+
+[Now run install-ambari-server.sh on Ambari server, that will install ambari on Ambari server]
+
+Once the Ambari is installed, access Ambari from browser -
+http://myhadoop-Ambari:8080
+admin/admin is the default username and password. 
+
+Installing Hadoop from the Web UI is fairly straight forward and will only ask for the hosts list and the SSH key
+which we have on our ambari server.
