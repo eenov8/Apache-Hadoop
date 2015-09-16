@@ -1,0 +1,34 @@
+Assuming the path to the configuration directory of Hadoop is -
+HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+
+Add this entry to ${HADOOP_CONF_DIR}/core-site.xml :
+
+   <property>
+     <name>topology.script.file.name</name>
+     <value>/opt/hadoop/scripts/rack-awareness.sh</value>
+   </property>
+
+Here is a WORKING /opt/hadoop/scripts/rack-awareness.sh script:
+
+#!/bin/bash
+#
+. /opt/hadoop/profile
+
+# $1 will be an IP Address
+nodeArg="$1"
+result=`grep "^${nodeArg}" ${HADOOP_CONF_DIR}/topology.data | awk '{print $2}'`
+
+if [ -z "$result" ]
+then
+    echo -n /default/rack
+else
+    echo -n $result
+fi
+
+Finally the contents of my ${HADOOP_CONF_DIR}/topology.data  file:
+192.168.1.110 /switch1/rack1
+192.168.1.111 /switch1/rack1
+192.168.1.113 /switch1/rack2
+192.168.1.114 /switch1/rack2
+192.168.1.116 /switch1/rack2
+192.168.1.117 /switch1/rack3
